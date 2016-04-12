@@ -1,4 +1,6 @@
 import Tkinter
+import wave
+
 
 class simpleapp_tk(Tkinter.Tk):
     def __init__(self,parent):
@@ -25,13 +27,22 @@ class simpleapp_tk(Tkinter.Tk):
         self.grid_columnconfigure(0,weight=1)
         self.resizable(True,False)
 
+
+
     def OnButtonClick(self):
         self.labelVariable.set("You clicked the button !")
 
     def OnPressEnter(self,event):
-        self.labelVariable.set("You pressed enter !")
+        wr = wave.open('test.wav','r')
+        nchannels, sampwidth, framerate, nframes, comptype, compname =  wr.getparams()
+        self.labelVariable.set(str(framerate) + "")
 
 if __name__ == "__main__":
     app = simpleapp_tk(None)
-    app.title('Dan Is Super Cool')
+    app.title('my application')
     app.mainloop()
+
+
+
+
+
