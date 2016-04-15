@@ -2,7 +2,7 @@ import Tkinter
 import wave
 
 
-class simpleapp_tk(Tkinter.Tk):
+class User_Interface(Tkinter.Tk):
     def __init__(self,parent):
         Tkinter.Tk.__init__(self,parent)
         self.parent = parent
@@ -33,16 +33,6 @@ class simpleapp_tk(Tkinter.Tk):
         self.labelVariable.set("You clicked the button !")
 
     def OnPressEnter(self,event):
-        wr = wave.open('test.wav','r')
+        wr = wave.open('Sound_Files/test.wav','r')
         nchannels, sampwidth, framerate, nframes, comptype, compname =  wr.getparams()
         self.labelVariable.set(str(framerate) + "")
-
-if __name__ == "__main__":
-    app = simpleapp_tk(None)
-    app.title('my application')
-    app.mainloop()
-
-
-
-
-
