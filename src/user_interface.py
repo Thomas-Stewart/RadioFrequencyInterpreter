@@ -1,14 +1,21 @@
 import Tkinter
 import wave
+from graph import *
+
+from src.file_loader import File_Loader
 
 
 class User_Interface(Tkinter.Tk):
+
+    currentAudioFilePath = ""
+
     def __init__(self,parent):
         Tkinter.Tk.__init__(self,parent)
-        self.parent = parent
-        self.initialize()
+        #self.parent = parent
+        #self.initialize()
+        #self.root = Tkinter.Tk()
 
-    def initialize(self):
+    #def initialize(self):
         self.grid()
 
         #self.entry = Tkinter.Entry(self)
@@ -24,15 +31,30 @@ class User_Interface(Tkinter.Tk):
         startButton.grid(column=0,row=1)
 
 
-        self.graphLabel = Tkinter.StringVar()
-        label3 = Tkinter.Label(self,textvariable=self.graphLabel,
-                              anchor="w",fg="black",bg="green")
-        label3.grid(column=1,row=0,sticky='NSEW')
-        self.graphLabel.set("Graph Here")
+        # self.graphLabel = Tkinter.StringVar()
+        # label3 = Tkinter.Label(self,textvariable=self.graphLabel,
+        #                       anchor="w",fg="black",bg="green")
+
+        # label3.grid(column=1,row=0,sticky='NSEW')
+        # self.graphLabel.set("Graph Here")
+
+
+        ######BROKEN######
+        self.graphCanvas = Graph().getGraph(self)
+        print self
+        #self.graphCanvas.show()
+        self.graphCanvas.get_tk_widget().grid(column=1,row=0,sticky='NSEW')
+        #self.graphCanvas.grid(column=1,row=0,sticky='NSEW')
+        ##################
+
+
+
+
 
         self.labelVariable = Tkinter.StringVar()
         label = Tkinter.Label(self,textvariable=self.labelVariable,
                               anchor="w",fg="white",bg="red")
+        label.pack()
         label.grid(column=1,row=1,sticky='NSEW')
 
 
@@ -58,13 +80,24 @@ class User_Interface(Tkinter.Tk):
 
 
 
+
+
+
     def LoadButtonClick(self):
         self.labelVariable.set("Loading...")
+        self.root.update()
+        self.currentAudioFilePath = File_Loader().loadMP3()
+        self.labelVariable.set("Loaded")
+
+
 
     def StartButtonClick(self):
-        self.labelVariable2.set("Starting...")
+        self.labelVariable.set("Starting...")
+        wr = wave.open(self.currentAudioFilePath, 'r')
+        nchannels, sampwidth, framerate, nframes, comptype, compname =  wr.getparams()
+        self.labelVariable2.set(str(framerate) + "")
+        self.labelVariable.set("Finished")
+
 
     def OnPressEnter(self,event):
-        wr = wave.open('Sound_Files/test.wav','r')
-        nchannels, sampwidth, framerate, nframes, comptype, compname =  wr.getparams()
-        self.labelVariable.set(str(framerate) + "")
+        print "enter"
