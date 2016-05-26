@@ -13,16 +13,16 @@ from gnuradio import filter
 
 class psk31_demod(gr.top_block):
 
-    def __init__(self):
+    def __init__(self, src_file):
         gr.top_block.__init__(self)
 
         sample_rate = 11025
 	ampl = 0.1
-
+        print src_file
         # Audio source (.wav file)
         # TODO : Make the filename a VARIABLE
-        src_file = input("Enter .wav File PSK31 : ")
-        src = blocks.wavfile_source("./" + src_file, False)
+        # src_file = input("Enter .wav File PSK31 : ")
+        src = blocks.wavfile_source(src_file, False)
 
         # Raw float data output file.
         # TODO : To make the raw file also a variable, for psk31decoder2.py to run
@@ -60,7 +60,7 @@ class psk31_demod(gr.top_block):
 # Instantiate the demodulator
 if __name__ == '__main__':
     try:
-        psk31_demod().run()
+        psk31_demod("./bpsk31.wav").run()
     except KeyboardInterrupt:
         pass
 

@@ -2,7 +2,8 @@ import Tkinter
 import wave
 from graph import *
 
-from src.file_loader import File_Loader
+from file_loader import File_Loader
+from psk31.psk31decoder2 import psk31_decode
 
 
 class User_Interface(Tkinter.Tk):
@@ -54,7 +55,7 @@ class User_Interface(Tkinter.Tk):
         self.labelVariable = Tkinter.StringVar()
         label = Tkinter.Label(self,textvariable=self.labelVariable,
                               anchor="w",fg="white",bg="red")
-        label.pack()
+        #label.pack()
         label.grid(column=1,row=1,sticky='NSEW')
 
 
@@ -93,9 +94,10 @@ class User_Interface(Tkinter.Tk):
 
     def StartButtonClick(self):
         self.labelVariable.set("Starting...")
-        wr = wave.open(self.currentAudioFilePath, 'r')
-        nchannels, sampwidth, framerate, nframes, comptype, compname =  wr.getparams()
-        self.labelVariable2.set(str(framerate) + "")
+        #wr = wave.open(self.currentAudioFilePath, 'r')
+        #nchannels, sampwidth, framerate, nframes, comptype, compname =  wr.getparams()
+	message = psk31_decode(self.currentAudioFilePath)
+        self.labelVariable2.set(message)
         self.labelVariable.set("Finished")
 
 
