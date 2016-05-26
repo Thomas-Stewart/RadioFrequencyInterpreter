@@ -13,7 +13,7 @@ class User_Interface(Tkinter.Tk):
         Tkinter.Tk.__init__(self,parent)
         #self.parent = parent
         #self.initialize()
-        #self.root = Tkinter.Tk()
+        self.root = self
 
     #def initialize(self):
         self.grid()
